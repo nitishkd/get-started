@@ -28,7 +28,7 @@ class MailingList:
         if(int(r.status_code) == 200):
             print('Check your Email to confirm')
     
-obj = MailingList('xola@youzend.net')
-obj.Subscribe('debian-user-digest') ##'debian-outreach'
+#obj = MailingList('xola@youzend.net')
+#obj.Subscribe('debian-user-digest') ##'debian-outreach'
 
-obj.Unsubscribe('debian-outreach')
+#obj.Unsubscribe('debian-outreach')

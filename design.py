@@ -1,58 +1,42 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'untitled.ui'
-#
-# Created by: PyQt4 UI code generator 4.11.4
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt4 import QtCore, QtGui
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
-
+import SubscribeMailingList as SML
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(423, 300)
-        self.buttonBox = QtGui.QDialogButtonBox(Dialog)
-        self.buttonBox.setGeometry(QtCore.QRect(30, 240, 341, 32))
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
-        self.checkBox = QtGui.QCheckBox(Dialog)
-        self.checkBox.setGeometry(QtCore.QRect(130, 180, 151, 31))
-        self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        self.checkBox_2 = QtGui.QCheckBox(Dialog)
-        self.checkBox_2.setGeometry(QtCore.QRect(130, 80, 171, 22))
-        self.checkBox_2.setObjectName(_fromUtf8("checkBox_2"))
-        self.checkBox_3 = QtGui.QCheckBox(Dialog)
-        self.checkBox_3.setGeometry(QtCore.QRect(130, 130, 171, 22))
-        self.checkBox_3.setObjectName(_fromUtf8("checkBox_3"))
-        self.label = QtGui.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(60, 20, 331, 20))
-        self.label.setObjectName(_fromUtf8("label"))
+        self.setGeometry(50, 50, 600, 300)
+        self.setWindowTitle("Getting Started!")
+        self.subscribeMailingList()
+        self.show()
+    
+    def subscribeMailingList(self):
+        label = QtGui.QLabel('Select Mailing Lists That You want to Subscribe!',self)
+        label.resize(400, 20)
+        label.move(50, 5)
+        self.email = QtGui.QLineEdit('Enter Email ID', self)
+        self.email.move(100, 30)
+        self.email.resize(280,20)
+        self.checkbox1 = QtGui.QCheckBox('debian-outreach',self)
+        self.checkbox1.move(100,60)
+        self.checkbox1.resize(200,20)
+        self.checkbox2 = QtGui.QCheckBox('debian-user-digest',self)
+        self.checkbox2.move(100,85)
+        self.checkbox2.resize(200,20)
+        self.subButton = QtGui.QPushButton('Subscribe', self)
+        self.subButton.move(100,120)
+        QtCore.QObject.connect(self.subButton, QtCore.SIGNAL('clicked()'), self.onClicked)
+    
+    def onClicked(self):
+        subObj = SML.MailingList(str(self.email.text()))
+        if(self.checkbox1.isChecked()):
+            subObj.Subscribe('debian-outreach')
+        if(self.checkbox2.isChecked()):
+            subObj.Subscribe('debian-user-digest')
+        
+        message = QtGui.QMessageBox()
+        message.setWindowTitle('Subscribed!')
+        message.setText("Check Your Email to Confirms Subscriptions!")
+        message.setIcon(QtGui.QMessageBox.Information)
+        message.setStandardButtons(QtGui.QMessageBox.Ok)
+        message.exec_()
+        
 
-        self.retranslateUi(Dialog)
-        ##QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
-        ##QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
-
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
-        self.checkBox.setText(_translate("Dialog", "Mailing List 3", None))
-        self.checkBox_2.setText(_translate("Dialog", "Mailing List 1", None))
-        self.checkBox_3.setText(_translate("Dialog", "Mailing List 2", None))
-        self.label.setText(_translate("Dialog", "Select The mailing list you want to subscribe.", None))
-
+        
